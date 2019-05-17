@@ -1,4 +1,5 @@
-import pygame
+import pygame, threading, utilsmovement, utilsthreading
+lock = threading.Lock()
 pygame.init()
 size = width, height = 640, 640
 blue = 18, 171, 255
@@ -10,11 +11,11 @@ for x in range(0, 640, 64):
         if y/64 <= 5:
             pass
         elif y/64 == 6:
-            screen.blit(pygame.image.load('textures/dirt.png'), (x, y))
+            with lock: screen.blit(pygame.image.load('textures/dirt.png'), (x, y))
         else:
-            screen.blit(pygame.image.load('textures/dirt2.png'), (x, y))
+            with lock: screen.blit(pygame.image.load('textures/dirt2.png'), (x, y))
 char_pos = [0, 64*4]
-screen.blit(pygame.image.load('textures/pie_character_64x128.png'), tuple(char_pos))
+with lock: screen.blit(pygame.image.load('textures/pie_character_64x128.png'), tuple(char_pos))
 pygame.display.flip()
 
 while 1:
@@ -22,13 +23,4 @@ while 1:
         if event.type == pygame.QUIT:
             sys.exit()
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_a]:
-        screen.blit(pygame.image.load('textures/sky_char.png'), tuple(char_pos))
-        char_pos[0] -= 1
-        screen.blit(pygame.image.load('textures/pie_character_64x128.png'), tuple(char_pos))
-        pygame.display.flip()
-    elif keys[pygame.K_d]:
-        screen.blit(pygame.image.load('textures/sky_char.png'), tuple(char_pos))
-        char_pos[0] += 1
-        screen.blit(pygame.image.load('textures/pie_character_64x128.png'), tuple(char_pos))
-        pygame.display.flip()
+    threading.Thread(target=utilsthreading.start, args=char_pos,keys,screen, pygame, lock)
