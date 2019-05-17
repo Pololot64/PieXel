@@ -23,4 +23,4 @@ while 1:
         if event.type == pygame.QUIT:
             sys.exit()
     keys = pygame.key.get_pressed()
-    threading.Thread(target=utilsthreading.start, args=char_pos,keys,screen, pygame, lock)
+    threading.Thread(target=utilsthreading.start, args=(char_pos, keys, screen), daemon=True).start()
