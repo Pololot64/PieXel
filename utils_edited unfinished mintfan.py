@@ -1,15 +1,16 @@
 import pygame, threading, os
-from PIL import Image
+### Avoid PIL as much as possible!!!! Stomps on PIL even though it is great... from PIL import Image
+
+
+
 class Texture:
     def __init__(self, texture_name):
-        self.img = pygame.image.load(texture_name)
+        self.img_unscaled = pygame.image.load(texture_name).convert_alpha()
+        self.img = self.img_unscaled
         self.texture_name = texture_name
         self.rect = self.img.get_rect()
     def resize(self, size):
-        img = Image.open(self.texture_name)
-        img = img.resize(size) 
-        img.save('resized/'+self.texture_name[len('textures/'):], self.texture_name[-3:])
-        self.__init__('resized/'+self.texture_name[len('textures/'):])
+        self.img = pygame.transform.scale(self.img_unscaled, size)
 
 
 
@@ -83,7 +84,7 @@ class Screen:
         self.width = size[0]
         self.height = size[1]
         self.sky_color = sky_color
-        self.screen = pygame.display.set_mode(size)
+        self.screen = pygame.display.set_mode(size, DOUBLEBUF|HWSURFACE) #Uses GPU more
         self.blocks_in_screen = blocks_in_screen
         self.block = round(self.width/blocks_in_screen), round(self.height // blocks_in_screen)
         self.t_size = round(self.width/10)
