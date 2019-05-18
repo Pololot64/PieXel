@@ -1,5 +1,6 @@
 import pygame, threading, os
 from PIL import Image
+
 class Texture:
     def __init__(self, texture_name):
         self.img = pygame.image.load(texture_name)
@@ -96,18 +97,20 @@ class Screen(Color):
         self.textures = self.find_textures()
         self.display = pygame.display
         self.s = self.screen
+    def draw_player(self):
+        player.draw()
     def draw_screen(self):
         for x in range(0, self.width, self.width//10):
             for y in range(0, self.height, self.height//10):
                 if y/self.t_size <= 5:
                     pass
                 elif y/self.t_size == 6:
-                    self.screen.blit(self.textures['dirt.png'].img, Coord((x,y)))
+                    self.screen.blit(self.textures['dirt.png'].img, tuple(Coord((x,y))))
                 else:
-                    self.screen.blit(self.textures['dirt2.png'].img, Coord((x,y)))
+                    self.screen.blit(self.textures['dirt2.png'].img, tuple(Coord((x,y))))
     
     def update(self):
-            pygame.display.flip()
+            pygame.display.update()
     
     def find_textures(self, dir='textures/', format='.png', resize=False):
         textures = {}
@@ -128,7 +131,7 @@ class Player(Entity, Screen):
         if char_pos is None:
             self.char_pos = Coord((0, self.screen.block[1]*4))
         else:
-            self.pos = Coord(char_pos)
+            self.char_pos = Coord(char_pos)
         self.skin = skin
     def draw(self, coords=None):
         if coords is None:
@@ -137,3 +140,4 @@ class Player(Entity, Screen):
     def move(self, new_pos=Coord((1,0))):
         screen.blit(self.skin.img, tuple(self.char_pos - new_pos))
         self.char_pos = new_pos
+player = Player(skin=Texture('skins/better_character.png'))
