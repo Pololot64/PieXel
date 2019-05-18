@@ -36,7 +36,7 @@ class Coord:
 
 
     def __sub__(self, other):
-                return Coord((self[0] - other[0], self[1] - other[1]))
+        return Coord((self[0] - other[0], self[1] - other[1]))
         
 
     def __mul__(self, other):
@@ -53,6 +53,9 @@ class Coord:
 
     def __lt__(self, other):
         return self.coord[1] < other.coord[1]
+    
+    def __tuple__(self):
+        return tuple(self.coord)
 
 
 class Entity:
@@ -79,7 +82,7 @@ class Entity:
 
 
 
-class Screen(pygame.Surface, Color):
+class Screen(Color):
     
     def __init__(self, sky_color=(18, 171, 255), size=(640,640), blocks_in_screen=10):
         self.size = size
@@ -92,6 +95,7 @@ class Screen(pygame.Surface, Color):
         self.t_size = round(self.width/10)
         self.textures = self.find_textures()
         self.display = pygame.display
+        self.s = self.screen
     def draw_screen(self):
         for x in range(0, self.width, self.width//10):
             for y in range(0, self.height, self.height//10):
@@ -113,7 +117,8 @@ class Screen(pygame.Surface, Color):
                 if resize:
                     textures[i].resize(self.t_size)
         return textures
-
+    def blit(self, image, pos):
+        self.s.blit(image, tuple(pos))
 screen = Screen()
 
 class Player(Entity, Screen):
@@ -128,7 +133,7 @@ class Player(Entity, Screen):
     def draw(self, coords=None):
         if coords is None:
             coords = self.char_pos
-        self.screen.blit(self.skin.img, self.pos())
+        self.screen.blit(self.skin.img, self.char_pos)
     def move(self, new_pos=Coord((1,0))):
-        self.skin.rect.move(tuple(new_pos)-tuple(self.pos))
-        self.pos = new_pos
+        self.skin.rect.move(tuple(self.char_pos - new_pos))
+        self.char_pos = new_pos
