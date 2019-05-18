@@ -1,7 +1,8 @@
+import textures
 class Entity:
 
 
-    def __init__(self, position):
+    def __init__(self, position=(0,0)):
         self.position = position
         self.velocity = (0, 0)
         self.acceleration = (0, 0)
@@ -18,3 +19,4 @@ class Entity:
     def accelerate(self, change_in_acceleration):
         self.acceleration = (self.acceleration[0] + change_in_acceleration[0],
                              self.acceleration[1] + change_in_acceleration[1])
+        
