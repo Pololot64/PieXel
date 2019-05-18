@@ -12,6 +12,9 @@ class Texture:
         self.__init__('resized/'+self.texture_name[len('textures/'):])
 
 
+class Color:
+    def __init__(self):
+        self.blue = 18, 171, 255
 
 class Coord:
     
@@ -76,7 +79,7 @@ class Entity:
 
 
 
-class Screen:
+class Screen(pygame.Surface, Color):
     
     def __init__(self, sky_color=(18, 171, 255), size=(640,640), blocks_in_screen=10):
         self.size = size
@@ -89,9 +92,6 @@ class Screen:
         self.t_size = round(self.width/10)
         self.textures = self.find_textures()
         self.display = pygame.display
-    
-    def start_window(self):
-        pygame.display.init()
     def draw_screen(self):
         for x in range(0, self.width, self.width//10):
             for y in range(0, self.height, self.height//10):
@@ -114,12 +114,14 @@ class Screen:
                     textures[i].resize(self.t_size)
         return textures
 
+screen = Screen()
 
 class Player(Entity, Screen):
     
     def __init__(self, skin=Texture('skins/better_character.png'), char_pos=None):
+        self.screen = screen
         if char_pos is None:
-            self.char_pos = Coord((0, Screen.block[1]*4))
+            self.char_pos = Coord((0, self.screen.block[1]*4))
         else:
             self.pos = Coord(char_pos)
         self.skin = skin
