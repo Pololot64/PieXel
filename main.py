@@ -32,6 +32,7 @@ while True:
         screen.update()
     elif keys[pygame.K_d]:
         player.move(player.char_pos+Coord((-1,0)))
+        screen.s.fill((0,0,0))
         screen.update()
 @atexit.register
 def delete():

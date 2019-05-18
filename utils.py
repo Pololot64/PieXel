@@ -135,5 +135,5 @@ class Player(Entity, Screen):
             coords = self.char_pos
         self.screen.blit(self.skin.img, self.char_pos)
     def move(self, new_pos=Coord((1,0))):
-        self.skin.rect.move(tuple(self.char_pos - new_pos))
+        screen.blit(self.skin.img, tuple(self.char_pos - new_pos))
         self.char_pos = new_pos
