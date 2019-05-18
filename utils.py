@@ -1,5 +1,6 @@
 import pygame, threading, os
-
+# TODO add api
+# TODO add mapgen
 
 class Texture:
     def __init__(self, texture_name):
@@ -10,7 +11,7 @@ class Texture:
     def resize(self, size):
         self.img = pygame.transform.scale(self.img_unscaled, size)
 
-
+# TODO add more colors
 class Color:
     def __init__(self):
         self.blue = 18, 171, 255
@@ -48,7 +49,7 @@ class Coord:
     def __tuple__(self):
         return tuple(self.coord)
 
-
+# TODO Add more physics 
 class Entity:
 
     def __init__(self, position=Coord((0,0))):
@@ -113,7 +114,7 @@ class Screen(Color):
 
 screen = Screen()
 
-
+# TODO add player jump and physics  
 class Player(Entity, Screen):
 
     def __init__(self, skin=Texture('skins/better_character.png'), char_pos=None):
