@@ -8,6 +8,7 @@ pygame.init()
 screen.fill(color.blue)
 player = Player(skin=Texture('skins/better_character.png'))
 
+
 for x in range(0, screen.width, screen.width//10):
     for y in range(0, screen.height, screen.height//10):
     
