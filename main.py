@@ -14,24 +14,18 @@ pygame.display.flip()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            pygame.quit()
             sys.exit()
-    keys = pygame.key.get_pressed()
+
+    keys = pygame.key.get_pressed() #This works but it is good to use the event loop
+
     if keys[pygame.K_a]:
-        print('A')
-        player.move(player.char_pos+Coord((1,0)))
-        screen.s.fill(color.blue)
-        screen.draw_screen()
-        player.draw_player()
-        screen.update()
-        
-    elif keys[pygame.K_d]:
         player.move(player.char_pos+Coord((-1,0)))
-        screen.s.fill(color.blue)
-        screen.draw_screen()
-        player.draw_player()
-        screen.update()
-@atexit.register
-def delete():
-    for i in os.listdir('resized'):
-        os.remove('resized/'+i)
-        
+
+    elif keys[pygame.K_d]:
+        player.move(player.char_pos+Coord((1,0)))
+
+    screen.s.fill(color.blue)  #The screen should update even when no key is pressed?
+    screen.draw_screen()
+    player.draw()
+    screen.update()
