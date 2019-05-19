@@ -32,3 +32,4 @@ while True:
         screen.redraw()
 
     player.__step()
+    player.draw()
