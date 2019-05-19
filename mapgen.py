@@ -59,19 +59,16 @@ class Mapgen():
         # Height of sample interval immediately to the left
         random.seed(self.seed + previous_sample)
         previous_sample_height = random.randint(self.min_height, self.max_height)
-        print("PREV", previous_sample, previous_sample_height)
 
         # Height of sample interval immediately to the right
         random.seed(self.seed + next_sample)
         next_sample_height = random.randint(self.min_height, self.max_height)
-        print("NEXT", next_sample, next_sample_height)
 
         # Now we know the two bounding points around the requested position.
         # The next step is to find the value of x.
 
         # Slope between the two points
         slope = (previous_sample_height - next_sample_height) / self.first_sample_size
-        print("SLOPE", slope)
 
         # Height
         height = previous_sample_height + int((x - previous_sample) * (-slope))
