@@ -86,7 +86,11 @@ class Screen(Color):
 
     def draw_player(self):
         player.draw()
-
+    def redraw(self):
+        self.s.fill(color.blue)
+        self.draw_screen()
+        player.draw()
+        self.update()
     def draw_screen(self):
         for x in range(0, self.width, self.width//10):
             for y in range(0, self.height, self.height//10):

@@ -27,7 +27,7 @@ while True:
     elif keys[pygame.K_d]:
         player.move(player.char_pos+Coord((1,0)))
 
-    screen.s.fill(color.blue)  #The screen should update even when no key is pressed?
+    screen.s.fill(color.blue)
     screen.draw_screen()
     player.draw()
     screen.update()
