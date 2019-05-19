@@ -13,8 +13,9 @@ class Texture:
 
 # TODO add more colors
 class Color:
-    def __init__(self):
-        self.blue = 18, 171, 255
+    def __init__(self, rgb=(0,0,0)):
+        self.color = rgb
+        
 
 class Coord:
 
