@@ -59,7 +59,7 @@ class Entity:
         self.velocity = Coord((0, 0))
         self.acceleration = (0, 0)
 
-    def __step(self):
+    def step(self):
         self.velocity = (self.velocity[0] + self.acceleration[0],
                          self.velocity[1] + self.acceleration[1])
 
@@ -121,7 +121,7 @@ class Screen(Color):
 screen = Screen()
 
 # TODO add player jump and physics  
-class Player(Entity, Screen):
+class Player(Screen):
 
     def __init__(self, skin=Texture('skins/better_character.png'), char_pos=None):
         self.screen = screen
@@ -129,7 +129,8 @@ class Player(Entity, Screen):
             self.char_pos = Coord((0, self.screen.block[1]*4))
         else:
             self.char_pos = Coord(char_pos)
-        Entity.__init__(self, char_pos)
+            
+        self.entity = Entity(char_pos)
         self.skin = skin
 
     def draw(self, coords=None):
@@ -141,5 +142,7 @@ class Player(Entity, Screen):
         screen.blit(self.skin.img, tuple(self.char_pos - new_pos))
         self.char_pos = new_pos
 
+    def step(self):
+        self.entity.step()
 
 player = Player(skin=Texture('skins/better_character.png'))
