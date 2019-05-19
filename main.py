@@ -23,10 +23,12 @@ while True:
     # TODO add more keys and keys api
     update_screen = False
     if keys[pygame.K_a]:
-        player.move(player.char_pos+Coord((-1,0)))
+        player.accelerate((-1,0))
         update_screen = True
     elif keys[pygame.K_d]:
-        player.move(player.char_pos+Coord((1,0)))
+        player.accelerate((1,0))
         update_screen = True
     if update_screen:
         screen.redraw()
+
+    player.__step()
