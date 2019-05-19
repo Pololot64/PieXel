@@ -30,3 +30,5 @@ while True:
         update_screen = True
     if update_screen:
         screen.redraw()
+
+    player.__step()

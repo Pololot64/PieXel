@@ -128,6 +128,7 @@ class Player(Entity, Screen):
             self.char_pos = Coord((0, self.screen.block[1]*4))
         else:
             self.char_pos = Coord(char_pos)
+        Entity.__init__(self, char_pos)
         self.skin = skin
 
     def draw(self, coords=None):
