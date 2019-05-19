@@ -31,4 +31,4 @@ while True:
     if update_screen:
         screen.redraw()
 
-    player.step()
+    player._Entity__step()
