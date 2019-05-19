@@ -54,16 +54,10 @@ class Coord:
 # TODO Add more physics 
 class Entity:
 
-    def __init__(self, position=None):
-        if self.position is None:
-            self.position = Coord((0,0))
-        else:
-            self.position = position
+    def __init__(self, position):
+        self.position = position
         self.velocity = Coord((0, 0))
         self.acceleration = Coord((0, 0))
-        print('pos', self.position)
-        print('vel', self.velocity)
-        print('acc', self.acceleration)
 
     def __step(self):
         self.velocity = (self.velocity[0] + self.acceleration[0],
@@ -82,7 +76,7 @@ class Screen(Color):
     def __init__(self, sky_color=(18, 171, 255), size=(640,640), blocks_in_screen=10):
         self.size = size
         self.width = size[0]
-        self.height = size[1]
+        self.height = size[1]i
         self.sky_color = sky_color
         self.screen = pygame.display.set_mode(size, pygame.DOUBLEBUF|pygame.HWSURFACE)
         self.blocks_in_screen = blocks_in_screen
@@ -130,14 +124,13 @@ screen = Screen()
 class Player(Screen, Entity):
 
     def __init__(self, skin=Texture('skins/better_character.png'), char_pos=None):
-        self.position = char_pos
         self.screen = screen
         if char_pos is None:
-            self.char_pos = Coord((0, self.screen.block[1]*4))
+            self.char_pos = Coord((0, 0))
         else:
             self.char_pos = Coord(char_pos)
             
-        Entity.__init__(self, char_pos)
+        Entity.__init__(self, self.char_pos)
         self.skin = skin
 
     def draw(self, coords=None):
@@ -152,4 +145,4 @@ class Player(Screen, Entity):
 
 
 
-player = Player(skin=Texture('skins/better_character.png'))
+player = Player(skin=Texture('skins/better_character.png'), char_pos=Coord((0,screen.block[1]*4)))
