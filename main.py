@@ -21,13 +21,12 @@ while True:
 
     keys = pygame.key.get_pressed() #This works but it is good to use the event loop
     # TODO add more keys and keys api
+    update_screen = False
     if keys[pygame.K_a]:
         player.move(player.char_pos+Coord((-1,0)))
-
+        update_screen = True
     elif keys[pygame.K_d]:
         player.move(player.char_pos+Coord((1,0)))
-
-    screen.s.fill(color.blue)
-    screen.draw_screen()
-    player.draw()
-    screen.update()
+        update_screen = True
+    if update_screen:
+        screen.redraw()
