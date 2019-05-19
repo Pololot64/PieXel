@@ -1,4 +1,4 @@
-import pygame, os, math, sys, atexit
+import pygame, os
 from utils import *
 # TODO add world saving
 world = {}
@@ -17,7 +17,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            sys.exit()
+            os._exit(0)
 
     keys = pygame.key.get_pressed() #This works but it is good to use the event loop
     # TODO add more keys and keys api
@@ -30,5 +30,3 @@ while True:
         update_screen = True
     if update_screen:
         screen.redraw()
-
-    player.__step()
