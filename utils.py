@@ -62,7 +62,7 @@ class Entity:
         self.velocity = Coord((0, 0))
         self.acceleration = Coord((0, 0))
 
-    def __step(self):
+    def step(self):
         self.velocity = (self.velocity[0] + self.acceleration[0],
                          self.velocity[1] + self.acceleration[1])
 
