@@ -135,9 +135,7 @@ class Player(Screen, Entity):
         Entity.__init__(self, self.char_pos)
         self.skin = skin
 
-    def draw(self, coords=None):
-        if coords is None:
-            coords = self.char_pos
+    def draw(self):
         self.screen.blit(self.skin.img, self.position)
 
 

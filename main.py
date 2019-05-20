@@ -19,7 +19,7 @@ textures = screen.find_textures()
 
 pygame.init()
 screen.s.fill(color.blue)
-player.draw(Coord((0,screen.block[1]*4)))
+player.draw()
 screen.draw_screen()
 
 pygame.display.flip()
