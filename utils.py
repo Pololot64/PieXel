@@ -57,21 +57,20 @@ class Coord:
 # TODO Add more physics 
 class Entity:
 
+
     def __init__(self, position):
         self.position = position
         self.velocity = Coord((0, 0))
         self.acceleration = Coord((0, 0))
 
-    def __step(self):
-        self.velocity = (self.velocity[0] + self.acceleration[0],
-                         self.velocity[1] + self.acceleration[1])
 
-        self.position = (self.position[0] + self.velocity[0],
-                         self.position[1] + self.velocity[1])
+    def step(self):
+        self.velocity += self.acceleration
+        self.position += self.velocity
+
 
     def accelerate(self, change_in_acceleration):
-        self.acceleration = (self.acceleration[0] + change_in_acceleration[0],
-                             self.acceleration[1] + change_in_acceleration[1])
+        self.acceleration += change_in_acceleration
 
 
 class Screen(Color):
@@ -139,12 +138,7 @@ class Player(Screen, Entity):
     def draw(self, coords=None):
         if coords is None:
             coords = self.char_pos
-        self.screen.blit(self.skin.img, self.char_pos)
-
-    def move(self, new_pos=Coord((1,0))):
-        screen.blit(self.skin.img, tuple(self.char_pos - new_pos))
-        self.position = self.char_pos
-        self.char_pos = new_pos
+        self.screen.blit(self.skin.img, self.position)
 
 
 player = Player(skin=Texture('skins/better_character.png'), char_pos=Coord((0,screen.block[1]*4)))
