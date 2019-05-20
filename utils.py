@@ -8,13 +8,12 @@ class Texture:
         self.img = self.img_unscaled
         self.texture_name = texture_name
         self.rect = self.img.get_rect()
-        self.size = self.rect[0]
     def resize(self, size):
         self.img = pygame.transform.scale(self.img_unscaled, size)
 
 # TODO add more colors
 palette = {
-    'blue' = 18, 171, 255
+    'blue' : (18, 171, 255),
 }
 
 class Coord:
@@ -79,7 +78,7 @@ class Screen(pygame.Surface):
         pygame.Surface.__init__(self, size)
         self.sky_color = sky_color
         self.textures = self.find_textures()
-        self.texture_size = self.textures[0].size
+        self.texture_size = self.textures[0].get_size()[0]
 
 
     def redraw(self):
@@ -91,7 +90,7 @@ class Screen(pygame.Surface):
 
     def draw_screen(self):
         width, height = self.get_width(), self.get_height()
-        for x in range(0, width, //10):
+        for x in range(0, width, height//10):
             for y in range(0, height, height//10):
                 if y/self.texture_size <= 5:
                     pass
