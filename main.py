@@ -1,7 +1,15 @@
 import pygame, os
 from utils import *
 # TODO add world saving
+size_of_world = (100,50)
 world = {}
+mapgen = Mapgen(
+    seed = random.randint(0,1000000000),
+    max_height = 100,
+    min_height = 0,
+    first_sample_size = 10,
+)
+world = mapgen.generate((100,100))
 player = Player()
 color = Color()
 textures = screen.find_textures()
