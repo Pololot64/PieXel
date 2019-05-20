@@ -152,7 +152,7 @@ class Mapgen():
     #
     # Suggested test values, to give you an idea of how things work:
     # seed = <N/A>, max_height = 10, min_height = 0, first_sample_size = 20
-    def __init__(self, seed : int, max_height : int, min_height : int, first_sample_size : int):
+    def __init__(self, seed, max_height, min_height, first_sample_size):
 
         self.seed = seed
         self.max_height = max_height
@@ -161,7 +161,7 @@ class Mapgen():
 
     # Returns type of block at specified position.
     # Returns "air", "ground", or "ground_surface"
-    def blockAt(self, x : int, y : int):
+    def blockAt(self, x, y):
 
         # First, a potential short-circuit evaluation for optimized results.
         # Not using >= and <= because max and min could possibly be surface ground.
@@ -185,7 +185,7 @@ class Mapgen():
         return "ground_surface"
 
     # Returns the y-level of the terrain surface at the specified x-value.
-    def groundLevelAt(self, x : int):
+    def groundLevelAt(self, x):
 
         # X-position of sample interval immediately to the left
         previous_sample = x - (x % self.first_sample_size)
