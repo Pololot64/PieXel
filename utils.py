@@ -8,15 +8,14 @@ class Texture:
         self.img = self.img_unscaled
         self.texture_name = texture_name
         self.rect = self.img.get_rect()
+        self.size = self.rect[0]
     def resize(self, size):
         self.img = pygame.transform.scale(self.img_unscaled, size)
 
 # TODO add more colors
-class Color:
-    def __init__(self, rgb=(0,0,0)):
-        self.color = rgb
-        self.blue = 18, 171, 255
-color = Color()
+palette = {
+    'blue' = 18, 171, 255
+}
 
 class Coord:
 
@@ -73,40 +72,37 @@ class Entity:
         self.acceleration += change_in_acceleration
 
 
-class Screen(Color):
+class Screen(pygame.Surface):
 
-    def __init__(self, sky_color=(18, 171, 255), size=(640,640), blocks_in_screen=10):
-        self.size = size
-        self.width = size[0]
-        self.height = size[1]
+
+    def __init__(self, sky_color=palette['blue'], size=(640,640)):
+        pygame.Surface.__init__(self, size)
         self.sky_color = sky_color
-        self.screen = pygame.display.set_mode(size, pygame.DOUBLEBUF|pygame.HWSURFACE)
-        self.blocks_in_screen = blocks_in_screen
-        self.block = round(self.width/blocks_in_screen), round(self.height // blocks_in_screen)
-        self.t_size = round(self.width/10)
         self.textures = self.find_textures()
-        self.display = pygame.display
-        self.s = self.screen
+        self.texture_size = self.textures[0].size
 
-    def draw_player(self):
-        player.draw()
+
     def redraw(self):
-        self.s.fill(color.blue)
+        self.fill(color.blue)
         self.draw_screen()
         player.draw()
         self.update()
+
+
     def draw_screen(self):
-        for x in range(0, self.width, self.width//10):
-            for y in range(0, self.height, self.height//10):
-                if y/self.t_size <= 5:
+        width, height = self.get_width(), self.get_height()
+        for x in range(0, width, //10):
+            for y in range(0, height, height//10):
+                if y/self.texture_size <= 5:
                     pass
-                elif y/self.t_size == 6:
-                    self.screen.blit(self.textures['dirt_with_grass.png'].img, tuple(Coord((x,y))))
+                elif y/self.texture_size == 6:
+                    self.blit(self.textures['dirt_with_grass.png'].img, tuple(Coord((x,y))))
                 else:
-                    self.screen.blit(self.textures['dirt.png'].img, tuple(Coord((x,y))))
+                    self.blit(self.textures['dirt.png'].img, tuple(Coord((x,y))))
 
     def update(self):
             pygame.display.update()
+
 
     def find_textures(self, dir='textures/', format='.png', resize=False):
         textures = {}
@@ -117,8 +113,6 @@ class Screen(Color):
                     textures[i].resize(self.t_size)
         return textures
 
-    def blit(self, image, pos):
-        self.s.blit(image, tuple(pos))
 
 screen = Screen()
 
