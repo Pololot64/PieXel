@@ -1,5 +1,6 @@
 import pygame, os, threading
 from utils import *
+import settings
 # TODO add world saving
 size_of_world = (100,50)
 world = {}
@@ -18,7 +19,7 @@ color = Color()
 textures = screen.find_textures()
 
 pygame.init()
-screen.s.fill(color.blue)
+main_window = pygame.display.set_mode(settings.screen_size)
 player.draw()
 screen.draw_screen()
 

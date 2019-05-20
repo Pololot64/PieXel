@@ -98,6 +98,9 @@ class Screen(pygame.Surface):
                     self.blit(self.textures['dirt_with_grass.png'].img, tuple(Coord((x,y))))
                 else:
                     self.blit(self.textures['dirt.png'].img, tuple(Coord((x,y))))
+        main_window = pygame.display.get_surface()
+        main_window.blit(self, main_window.get_rect())
+
 
     def update(self):
             pygame.display.update()
