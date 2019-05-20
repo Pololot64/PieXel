@@ -24,6 +24,9 @@ class Coord:
     def __init__(self, coord):
         self.coord = coord
 
+    def __hash__(self):
+        return hash(tuple(self.coord))
+
     def __repr__(self):
         return str(self.coord)
 
