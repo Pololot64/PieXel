@@ -233,7 +233,7 @@ class Mapgen():
             Y = self.groundLevelAt(i[0])
             world[Coord((i[0], Y))] = Block('default.dirt_with_grass.png', Texture('textures/dirt_with_grass.png'))
             for y in range(0,Y):
-                world[Coord((x,y))] = Block('default.dirt', Texture('textures/dirt'))
+                world[Coord((x,y))] = Block('default.dirt', Texture('textures/dirt.png'))
         return world
     
     
