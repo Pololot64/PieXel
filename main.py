@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, threading
 from utils import *
 # TODO add world saving
 size_of_world = (100,50)
@@ -9,7 +9,10 @@ mapgen = Mapgen(
     min_height = 0,
     first_sample_size = 10,
 )
-world = mapgen.generate((100,100))
+def gen():
+    world = mapgen.generate((100,100))
+mapgen_thread = threading.Thread(target=gen, daemon=True)
+mapgen_thread.start()
 player = Player()
 color = Color()
 textures = screen.find_textures()

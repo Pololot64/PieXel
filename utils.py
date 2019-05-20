@@ -102,9 +102,9 @@ class Screen(Color):
                 if y/self.t_size <= 5:
                     pass
                 elif y/self.t_size == 6:
-                    self.screen.blit(self.textures['dirt.png'].img, tuple(Coord((x,y))))
+                    self.screen.blit(self.textures['dirt_with_grass.png'].img, tuple(Coord((x,y))))
                 else:
-                    self.screen.blit(self.textures['dirt2.png'].img, tuple(Coord((x,y))))
+                    self.screen.blit(self.textures['dirt.png'].img, tuple(Coord((x,y))))
 
     def update(self):
             pygame.display.update()
