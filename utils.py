@@ -95,7 +95,7 @@ class Screen(pygame.Surface):
         width, height = self.get_width(), self.get_height()
         for x in range(0, width, height//10):
             for y in range(0, height, height//10):
-                if y/self.texture_size <= 5:
+                if y/self.texture_size[1] <= 5:
                     pass
                 elif y/self.texture_size == 6:
                     self.blit(self.textures['dirt_with_grass.png'].img, tuple(Coord((x,y))))
@@ -138,7 +138,7 @@ class Player(Screen, Entity):
         self.screen.blit(self.skin.img, self.position)
 
 
-player = Player(skin=Texture('skins/better_character.png'), char_pos=(0,50))
+player = Player(skin=Texture('skins/better_character.png'), char_pos=Coord((0,50)))
 
 
 class Mapgen():
