@@ -131,12 +131,11 @@ class Player(Screen, Entity):
             self.char_pos = Coord((0, 0))
         else:
             self.char_pos = char_pos
-            
+        self.position = self.char_pos
         Entity.__init__(self, self.char_pos)
         self.skin = skin
 
     def draw(self):
-        print(self.position)
         self.screen.blit(self.skin.img, self.position)
 
 
