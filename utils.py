@@ -1,6 +1,5 @@
 import pygame, threading, os, math, random, get_image_size
 # TODO add api
-# TODO add mapgen
 
 class Texture:
     def __init__(self, texture_name):
