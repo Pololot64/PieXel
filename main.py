@@ -14,8 +14,7 @@ def gen():
     world = mapgen.generate((100,100))
 mapgen_thread = threading.Thread(target=gen, daemon=True)
 mapgen_thread.start()
-
-textures = screen.find_textures()
+textures = screen.textures
 
 pygame.init()
 main_window = pygame.display.set_mode(settings.screen_size)
