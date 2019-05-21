@@ -76,7 +76,6 @@ class Screen(pygame.Surface):
     def __init__(self, sky_color=palette['blue'], size=(640,640)):
         pygame.init()
         pygame.Surface.__init__(self, size)
-        self.screen = pygame.display.set_mode(size, pygame.DOUBLEBUF|pygame.HWSURFACE)
         self.sky_color = sky_color
         for i in os.listdir('textures'):
             if i.endswith('.png'):
@@ -98,9 +97,9 @@ class Screen(pygame.Surface):
                 if y/self.texture_size <= 5:
                     pass
                 elif y/self.texture_size == 6:
-                    self.blit(self.textures['dirt_with_grass.png'].img, tuple(Coord((x,y))))
+                    self.blit(self.textures['dirt_with_grass.png'].img, (x, y))
                 else:
-                    self.blit(self.textures['dirt.png'].img, tuple(Coord((x,y))))
+                    self.blit(self.textures['dirt.png'].img, (x, y))
         main_window = pygame.display.get_surface()
         main_window.blit(self, main_window.get_rect())
 
