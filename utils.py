@@ -1,10 +1,10 @@
-import pygame, threading, os, math, random
+import pygame, threading, os, math, random, get_image_size
 # TODO add api
 # TODO add mapgen
 
 class Texture:
     def __init__(self, texture_name):
-        self.img_unscaled = pygame.image.load(texture_name).convert_alpha()
+        self.img_unscaled = pygame.image.load(texture_name)#.convert_alpha()
         self.img = self.img_unscaled
         self.texture_name = texture_name
         self.rect = self.img.get_rect()
@@ -75,14 +75,18 @@ class Screen(pygame.Surface):
 
 
     def __init__(self, sky_color=palette['blue'], size=(640,640)):
+        pygame.init()
         pygame.Surface.__init__(self, size)
+        self.screen = pygame.display.set_mode(size, pygame.DOUBLEBUF|pygame.HWSURFACE)
         self.sky_color = sky_color
-        self.textures = self.find_textures()
-        self.texture_size = self.textures[0].get_size()[0]
+        for i in os.listdir('textures'):
+            if i.endswith('.png'):
+                self.texture_size = get_image_size.get_image_size('textures/'+i)
+        self.textures = self.find_textures(resize=True)
 
 
     def redraw(self):
-        self.fill(color.blue)
+        self.fill(palette['blue'])
         self.draw_screen()
         player.draw()
         self.update()
@@ -112,7 +116,7 @@ class Screen(pygame.Surface):
             if i.endswith(format):
                 textures[i] = Texture(dir+i)
                 if resize:
-                    textures[i].resize(self.t_size)
+                    textures[i].resize(self.texture_size)
         return textures
 
 
@@ -126,16 +130,17 @@ class Player(Screen, Entity):
         if char_pos is None:
             self.char_pos = Coord((0, 0))
         else:
-            self.char_pos = Coord(char_pos)
+            self.char_pos = char_pos
             
         Entity.__init__(self, self.char_pos)
         self.skin = skin
 
     def draw(self):
+        print(self.position)
         self.screen.blit(self.skin.img, self.position)
 
 
-player = Player(skin=Texture('skins/better_character.png'), char_pos=Coord((0,screen.block[1]*4)))
+player = Player(skin=Texture('skins/better_character.png'), char_pos=(0,50))
 
 
 class Mapgen():
