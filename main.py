@@ -16,7 +16,7 @@ mapgen_thread = threading.Thread(target=gen, daemon=True)
 mapgen_thread.start()
 textures = screen.textures
 
-pygame.init()
+
 main_window = pygame.display.set_mode(settings.screen_size)
 player.draw()
 screen.draw_screen()

@@ -1,4 +1,4 @@
-import pygame, threading, os, math, random, get_image_size
+import pygame, threading, os, math, random, get_image_size, settings
 # TODO add api
 
 class Texture:
@@ -76,11 +76,13 @@ class Screen(pygame.Surface):
     def __init__(self, sky_color=palette['blue'], size=(640,640)):
         pygame.init()
         pygame.Surface.__init__(self, size)
+        pygame.display.get_init()
         self.sky_color = sky_color
         for i in os.listdir('textures'):
             if i.endswith('.png'):
                 self.texture_size = get_image_size.get_image_size('textures/'+i)
         self.textures = self.find_textures(resize=True)
+        self.main_window = pygame.display.get_surface()
 
 
     def redraw(self):
@@ -100,8 +102,7 @@ class Screen(pygame.Surface):
                     self.blit(self.textures['dirt_with_grass.png'].img, (x, y))
                 else:
                     self.blit(self.textures['dirt.png'].img, (x, y))
-        main_window = pygame.display.get_surface()
-        main_window.blit(self, main_window.get_rect())
+        self.main_window.blit(self, self.main_window.get_rect())
 
 
     def update(self):
@@ -136,7 +137,7 @@ class Player(Screen, Entity):
         self.blit(self.skin.img, tuple(self.position))
 
 
-player = Player(skin=Texture('skins/better_character.png'), char_pos=Coord((0,200)))
+player = Player(skin=Texture('skins/better_character.png'), char_pos=Coord((0,50)))
 
 
 class Mapgen():
