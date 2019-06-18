@@ -1,1 +1,0 @@
-screen_size = 640, 640
