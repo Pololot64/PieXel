@@ -57,3 +57,4 @@ visible = false
 texture = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="Haze"]
+
