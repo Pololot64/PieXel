@@ -10,6 +10,10 @@ func _ready():
 
 func get_tile(tile_name):
 	return tile_set.find_tile_by_name(tile_name)
+	
+func load_tileset(tileset_path):
+	set_tileset(load(tileset_path))
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
