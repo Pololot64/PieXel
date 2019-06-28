@@ -17,7 +17,7 @@ _global_script_class_icons={
 
 config/name="PieXel"
 run/main_scene="res://InGame.tscn"
-config/icon="res://icon.png"
+config/icon="res://logo.png"
 
 [display]
 

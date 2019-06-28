@@ -33,7 +33,7 @@ func ptt(pixels):
 	
 func get_tile_pixels(x, y):
 	var tile_pos = get_node("../Ground").world_to_map(Vector2(float(x), float(y)))
-	set_tile(tile_pos[0], tile_pos[1], "")
+	set_tile(tile_pos[0], tile_pos[1], "dirt")
 	#print(ptt(get_node("../Player").get_cam_pos()[0] - 170))
 	#return WORLD[y][x]
 	
