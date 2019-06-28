@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+seed = 1
+octaves = 1
+period = 75.9
+persistence = 0.15
+lacunarity = 0.1
+
+[sub_resource type="NoiseTexture" id=2]
+noise = SubResource( 1 )
+
+[node name="Node" type="Node"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 610, 300 )
+texture = SubResource( 2 )
+

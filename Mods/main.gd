@@ -78,32 +78,48 @@ static func _on_load(map_seed, biome, WORLD_WIDTH, SKY_HEIGHT, GROUND_DEPTH, api
 	
 	for w in WORLD_WIDTH:
 		#Fill the mountains with blocks
+		var cave_offset = 20
 		for h in range(SKY_HEIGHT - ground_heights[w], SKY_HEIGHT):
 			var block = mineral_noise.get_noise_2d(float(w), float(h))
-			world[h][w] = str(api.get_tile(block, biome, "mineral"))
-			if str(api.get_tile(block, biome, "mineral")) == "" or str(api.get_tile(block, biome, "mineral")) == "cave":
-				walls[h][w] = "dirt_wall"
+			block = str(api.mapgen_get_tile(block, biome, "mineral"))
+			world[h][w] = block
+		
+		
+		
+				
+		
 			
 		#Fill the earth with minerals
 		for h in range(SKY_HEIGHT, WORLD_HEIGHT):
 			var block = mineral_noise.get_noise_2d(float(w), float(h))
-			world[h][w] = str(api.get_tile(block, biome, "mineral"))
+			block = str(api.mapgen_get_tile(block, biome, "mineral"))
+			world[h][w] = block
 			
-			if str(api.get_tile(block, biome, "mineral")) == "" or str(api.get_tile(block, biome, "mineral")) == "cave":
-				walls[h][w] = str("dirt_wall")
+		for h in range(SKY_HEIGHT - ground_heights[w], SKY_HEIGHT):
+			#Make sure caves are deeper
+			var depth = h - (SKY_HEIGHT - ground_heights[w]) - 1
+			if world[h][w] == "cave" and depth < 1:
+				for i in range(int(mountain_max_height / 3)):
+					#world[SKY_HEIGHT - ground_heights[w] + depth + i + 1][w] = "gold"
+					world[SKY_HEIGHT - ground_heights[w] + i][w] = "dirt"
+				
+				break	
+		
+			
+			
 			
 	    #grow the grass... whatever the player will step on :-)
-		world[SKY_HEIGHT - ground_heights[w]][w] = api.get_tile(surface[w], biome, "surface")
+		world[SKY_HEIGHT - ground_heights[w]][w] = api.mapgen_get_tile(surface[w], biome, "surface")
 		
 	
 		
 		
 		#Add vegetation to the world. This includes rocks XP Could not find a better name
-		var vegetation_type = api.get_tile(surface[w], biome, "vegetation")
+		var vegetation_type = api.mapgen_get_tile(surface[w], biome, "vegetation")
 		world[SKY_HEIGHT - ground_heights[w] - 1][w] = vegetation_type
 		
 		#Make sure nothing is growing on water...
-		if api.get_tile(surface[w], biome, "surface") == "water":
+		if api.mapgen_get_tile(surface[w], biome, "surface") == "water":
 			world[SKY_HEIGHT - ground_heights[w] - 1][w] = ""
 			vegetation_type = "None"
 		
@@ -119,7 +135,7 @@ static func _on_load(map_seed, biome, WORLD_WIDTH, SKY_HEIGHT, GROUND_DEPTH, api
 				tree_height = 7
 			
 			#make the base have a stump
-			world[SKY_HEIGHT - ground_heights[w]][w] = biome["tree"]["base"]
+			#world[SKY_HEIGHT - ground_heights[w]][w] = biome["tree"]["base"]
 			var current_tile = 1
 			while current_tile < tree_height:
 				world[SKY_HEIGHT - ground_heights[w] - current_tile][w] = biome["tree"]["trunk"]
@@ -133,8 +149,13 @@ static func _on_load(map_seed, biome, WORLD_WIDTH, SKY_HEIGHT, GROUND_DEPTH, api
 				var side_leaves_extend = int(len(biome["tree"]["grid"][y]) / 2.0)
 				var current = -1 * side_leaves_extend
 				for i in biome["tree"]["grid"][y]:
-					world[SKY_HEIGHT - ground_heights[w] - tree_height + y][w + current] = biome["tree"]["leaves"][i]
+					world[SKY_HEIGHT - ground_heights[w] - tree_height + y][w + current] = "leaf"#biome["tree"]["leaves"][i]
 					current += 1
+		#Just add water
+			
+		#add a bottom wall to the world
+		world[WORLD_HEIGHT - 1][w] = "dirt"
+			
 					
 				
 	return world # Voila... a mapgen mod
