@@ -1,12 +1,17 @@
 extends Node2D
 
 #The user will select their biome in the menu? Maybe random?
-const biome_dir = "res://Mods/Biomes/Grasslands" #Have this passed as an arg later
+
+#For Linux Exporting use user as the access path
+
+const access_path = ""
+
+const biome_dir = access_path + "Mods/Biomes/Grasslands" #Have this passed as an arg later
 const map_seed = 3232
 
-const MOD_PATH = "res://Mods/"
+const MOD_PATH = access_path + "Mods/"
 
-const modding_api = "res://modding_api.gd"
+
 
 #Make these args too:
 const WORLD_WIDTH = 300
@@ -76,8 +81,11 @@ func _ready():
 				
 				var sky_center = (SKY_HEIGHT * Ground.get_cell_size()[1])
 				
+				Ground.set_position(Vector2(0, 0))
+				
 				#REMOVE THIS AS SOON AS NEW PLAYER CODE IS READY! Put the player in the center of the map
-				$Player.set_position(Vector2(float(pix_width / 2), float(pix_height)))
+				$Player.set_position(Vector2(float(ttp(WORLD_WIDTH) / 2), float(pix_height)))
+				
 				#$Background1.set_position(Vector2(float(pix_width / 2), float(pix_height)))
 				
 				$Player.set_api(api)
@@ -92,7 +100,7 @@ func _ready():
 				#Is it working???
 				$Backdrop2.set_offset(Vector2(0, ttp(0)))
 				
-				api.set_tile(2, 40, "dirt")
+				
 				
 			#Load sprite mods
 			if mod.mod_type == "sprite":

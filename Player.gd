@@ -19,7 +19,7 @@ var anim=""
 
 var api = null
 
-var limits = [0, 0, 0, 0]
+var limits = [0, 10000, -10000, 10000]
 
 #cache the sprite here for fast access (we will set scale to flip it often)
 onready var sprite = $Sprite
@@ -28,6 +28,7 @@ func get_cam_pos():
 	return $Camera2D.get_camera_position()
 
 func set_scroll_limit(up, down, left, right):
+	
 	#up
 	get_node("Camera2D").set_limit(1, up)
 	#down
@@ -55,13 +56,15 @@ func _physics_process(delta):
 	# Move and Slide
 	if get_position()[0] > limits[2] and get_position()[0] < limits[3]:
 		linear_vel = move_and_slide(linear_vel, FLOOR_NORMAL, SLOPE_SLIDE_STOP)
-	else:
+	
+	elif get_position()[0] < limits[2] or get_position()[0] > limits[3]:
 		#Stop at left edge
 		if get_position()[0] < limits[2]:
 		    set_position(Vector2(float(limits[2] + 1), float(get_position()[1])))
 		#at right edge
 		elif get_position()[0] > limits[3]:
 		    set_position(Vector2(float(limits[3] - 1), float(get_position()[1])))
+	
 	# Detect Floor
 	if is_on_floor():
 		onair_time = 0

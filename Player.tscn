@@ -36,6 +36,9 @@ extents = Vector2( 17.0635, 52.7752 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
