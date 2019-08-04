@@ -8,7 +8,8 @@ const override_texture = false #give this block a folder of assets of the same n
 
 #block specific functions
 
-const destroy_time = 0.6 #How many seconds it takes to destroy
+const hardness = 3 #How hard it is to destroy between 1 and 10
+const destroy_time = 1 #How long it takes to destroy with the weakest possible tool
 
 
 #item functions

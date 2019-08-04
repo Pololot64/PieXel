@@ -140,6 +140,7 @@ func _ready():
 				var block = {
 					"item_name":block_object.item_name,
 					"item_type":"block",
+					"hardness":block_object.hardness,
 					"destroy_time":block_object.destroy_time
 				}
 				item_lib[block["item_name"]] = block
@@ -210,8 +211,9 @@ func _process(delta):
 	var distx = coords[0] - player_coords[0]
 	var disty = coords[1] - player_coords[1]
 	var dist = int(sqrt((distx * distx) + (disty * disty)))
-		
-	if dist >= 0:
+	var block = api.get_tile(coords[0], coords[1])
+	
+	if dist >= 0 and Input.is_mouse_button_pressed(1) == false:
 		var color
 		if dist < action_distance and dist > 1:
 			color = "green"
@@ -230,7 +232,7 @@ func _process(delta):
 		#Press and hold on a block to delete it
 		
 		
-		var block = api.get_tile(coords[0], coords[1])
+		
 		
 		if dist > 1 and dist < action_distance and player.inventory.current_block != "" and api.ITEM_LIB.has(player.inventory.current_block):
 			var current_block_type = player.inventory.get_block_dict(player.inventory.current_block)["item_type"]
@@ -256,14 +258,38 @@ func _process(delta):
 				if coords != last_acted: #Wait till there is a new coord before acting
 					last_acted = coords
 					mouse_held_time = 0
+				var hardness = player.inventory.get_block_dict(block)["hardness"]
 				var destroy_time = player.inventory.get_block_dict(block)["destroy_time"]
 				var tool_power = player.inventory.get_block_dict(player.inventory.current_block)["power"]
-				if mouse_held_time > destroy_time * (1 / tool_power):
-					mouse_held_time = 0
-					player.inventory.add_block(block, 1)
-					print(player.inventory.inventory)
-					print("destroy")
-					api.set_tile(coords[0], coords[1], "")
+				var final_destroy_time
+				
+				if tool_power >= hardness:
+					if tool_power - hardness > 0:
+						final_destroy_time = (1 - ((tool_power - hardness) / 20.0)) * destroy_time
+					else:
+						final_destroy_time = destroy_time
+					
+					var completed = int((mouse_held_time / final_destroy_time) * 100)
+					var state = "green"
+					
+					if completed < 30:
+						state = "d1"
+					elif completed >= 30 and completed < 60:
+						state = "d2"
+					elif completed >= 60 and completed < 100:
+						state = "d3"
+					elif completed == 100:
+						state = "green"
+					$Selected.clear()
+					$Selected.set_cellv(coords, $Selected.get_tile(state))
+					$Selected.update_bitmask_region()
+					
+					if mouse_held_time > final_destroy_time:
+						mouse_held_time = 0
+						player.inventory.add_block(block, 1)
+						print(player.inventory.inventory)
+						print("destroy")
+						api.set_tile(coords[0], coords[1], "")
 		
 		
 		

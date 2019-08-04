@@ -13,7 +13,7 @@ var api = null
 
 func load_default(inventory_dict):
 	inventory = inventory_dict
-	current_block = "dirt" #Placeholder... make it the selected item in inventory
+	current_block = "ax" #Placeholder... make it the selected item in inventory
 
 
 func set_api(api_object):

@@ -8,7 +8,7 @@ const override_texture = false #give this block a folder of assets of the same n
 
 #tool specific functions
 
-const power = 1  #must be between 0 and 1
+const power = 5  #How strong the tool is. Number between 1 and 20. A tool can destroy anything with a hardness <= its power. If there is extra power, it destroys faster
 
 
 #item functions
