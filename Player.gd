@@ -24,6 +24,8 @@ var limits = [0, 10000, -10000, 10000]
 #cache the sprite here for fast access (we will set scale to flip it often)
 onready var sprite = $Sprite
 
+onready var inventory = $Inventory
+
 func get_cam_pos():
 	return $Camera2D.get_camera_position()
 
@@ -42,6 +44,12 @@ func set_scroll_limit(up, down, left, right):
 
 func set_api(api_object):
 	api = api_object
+	$Inventory.set_api(api)
+
+func get_coords(): #return the player position in blocks
+	var tile_pos = get_node("../Ground").world_to_map(Vector2(get_position()[0], get_position()[1]))
+	return tile_pos
+
 
 func _physics_process(delta):
 	#increment counters

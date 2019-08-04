@@ -3,6 +3,13 @@ extends Node
 
 var WORLD
 
+var MOD_PATH
+
+var ITEM_LIB
+
+var environment_light = 100
+
+
 func prepare(world):
 	WORLD = world
 
@@ -24,6 +31,15 @@ func set_tile(x, y, new_tile):
 func get_tile(x, y):
 	return WORLD[y][x]
 	
+func get_light():
+	return environment_light
+
+func set_light(lightness): #light between 0=dark and 100=light	
+	environment_light = lightness
+	var num = (lightness / 100.0)
+	get_node("../NightMask").set_color(Color(num, num, num, 1))
+	get_node("../Backdrop2").set_light(num)
+	get_node("../Backdrop3").set_light(num)
 	
 func ttp(tiles):
 	return tiles * get_node("../Ground").get_cell_size()[0]
@@ -33,9 +49,8 @@ func ptt(pixels):
 	
 func get_tile_pixels(x, y):
 	var tile_pos = get_node("../Ground").world_to_map(Vector2(float(x), float(y)))
-	set_tile(tile_pos[0], tile_pos[1], "dirt")
-	#print(ptt(get_node("../Player").get_cam_pos()[0] - 170))
-	#return WORLD[y][x]
+	return tile_pos
+	
 	
 func mapgen_get_type(tile, biome):
 	

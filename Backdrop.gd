@@ -8,6 +8,9 @@ extends ParallaxBackground
 func _ready():
 	pass # Replace with function body.
 
+func set_light(num):
+	$NightMask.set_color(Color(num, num, num, 1))
+
 func prepare(image, offset=null):
 	get_node("Layer/Texture").set_texture(image)
 	image.set_flags(32)
